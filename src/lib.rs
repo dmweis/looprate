@@ -56,4 +56,13 @@ impl Rate {
         }
         self.next = Instant::now() + self.time_step;
     }
+
+    pub fn check(&mut self) -> bool {
+        if let Some(_) = self.next.checked_duration_since(Instant::now()) {
+            return false;
+        } else {
+            self.next = Instant::now() + self.time_step;
+            return true;
+        }
+    }
 }
