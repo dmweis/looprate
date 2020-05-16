@@ -1,3 +1,6 @@
+pub mod log_timer;
+pub mod shared_timers;
+
 use std::thread::sleep;
 use std::time::{ Duration, Instant };
 
