@@ -23,15 +23,15 @@ impl SharedTimer {
     }
 
     pub fn elapsed(&self) -> Duration {
-        self.last.elapsed()
+        Duration::from_millis(self.shared_elapsed.load(Ordering::Acquire) as u64)
     }
 
     pub fn elapsed_ms(&self) -> u32 {
-        self.last.elapsed().as_millis() as u32
+        self.shared_elapsed.load(Ordering::Acquire)
     }
 
     pub fn elapsed_hz(&self) -> f32 {
-        1000.0 / self.last.elapsed().as_millis() as f32
+        1000.0 / self.shared_elapsed.load(Ordering::Acquire) as f32
     }
 }
 
