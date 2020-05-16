@@ -6,29 +6,32 @@ use std::time::{ Duration, Instant };
 
 pub struct RateTimer {
     last: Instant,
+    last_loop:  Duration,
 }
 
 impl RateTimer {
     pub fn new() -> RateTimer {
         RateTimer {
             last: Instant::now(),
+            last_loop: Duration::from_secs(0),
         }
     }
 
     pub fn tick(&mut self) {
+        self.last_loop = self.last.elapsed();
         self.last = Instant::now();
     }
 
     pub fn elapsed(&self) -> Duration {
-        self.last.elapsed()
+        self.last_loop
     }
 
     pub fn elapsed_ms(&self) -> u32 {
-        self.last.elapsed().as_millis() as u32
+        self.last_loop.as_millis() as u32
     }
 
     pub fn elapsed_hz(&self) -> f32 {
-        1000.0 / self.last.elapsed().as_millis() as f32
+        1000.0 / self.last_loop.as_millis() as f32
     }
 }
 
